@@ -32,7 +32,7 @@ module.exports = {
       "template": "./src/index.pug",
       "filename": "./index.html",
       "hash": false,
-      "inject": true,
+      "inject": "head",
       "compile": true,
       "favicon": false,
       "cache": false,

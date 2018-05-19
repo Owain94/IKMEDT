@@ -50,7 +50,7 @@ module.exports = {
       "template": "./src/index.pug",
       "filename": "./index.html",
       "hash": false,
-      "inject": true,
+      "inject": "head",
       "compile": true,
       "favicon": false,
       "cache": false,
@@ -88,10 +88,8 @@ module.exports = {
     }),
     new HtmlWebpackExcludeAssetsPlugin(),
     new ScriptExtHtmlWebpackPlugin({
-      "async": "main",
       "inline": [
-        "inline",
-        "sw-register"
+        "inline"
       ]
     }),
     new SubresourceIntegrityPlugin({

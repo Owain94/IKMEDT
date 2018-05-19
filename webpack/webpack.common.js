@@ -10,6 +10,7 @@ const postcssReporter = require("postcss-reporter")
 const cssnano = require("cssnano")
 const url = require("postcss-url")
 const webpack = require("webpack")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const { CommonsChunkPlugin } = require("webpack").optimize
 const { LoaderOptionsPlugin } = require("webpack")
@@ -233,7 +234,16 @@ module.exports = {
     ]
   },
   "plugins": [
-    new webpack.IgnorePlugin(/vertx/),
+    new CopyWebpackPlugin([
+      {
+        "from": "src/assets/objects",
+        "to": "objects"
+      },
+      {
+        "from": "src/assets/icons/favicon.png",
+        "to": "favicon.png"
+      }
+    ]),
     new ProgressBarPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       "name": "main",
