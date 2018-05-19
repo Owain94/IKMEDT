@@ -8,6 +8,7 @@ const ZopfliPlugin = require("zopfli-webpack-plugin");
 const BrotliPlugin = require("brotli-webpack-plugin")
 const PurifyCSSPlugin = require("purifycss-webpack")
 const SubresourceIntegrityPlugin = require("webpack-subresource-integrity")
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 const entryPoints = [
   "inline",
@@ -24,9 +25,16 @@ module.exports = {
     "styles": "./src/assets/css/styles.styl"
   },
   "output": {
-    "crossOriginLoading": "anonymous"
+    "crossOriginLoading": "anonymous",
+    "path": path.join(process.cwd(), "dist"),
+    "filename": "[name].[chunkhash:5].bundle.js",
+    "chunkFilename": "[id].[chunkhash:5].chunk.js"
   },
   "plugins": [
+    new ExtractTextPlugin({
+      "filename": "[name].[contenthash:5].bundle.css",
+      "allChunks": true
+    }),
     new PurifyCSSPlugin({
       "paths": glob.sync(
         path.join(process.cwd(), "src/**/*.pug")

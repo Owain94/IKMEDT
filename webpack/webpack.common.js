@@ -11,6 +11,7 @@ const cssnano = require("cssnano")
 const url = require("postcss-url")
 const webpack = require("webpack")
 
+const { CommonsChunkPlugin } = require("webpack").optimize
 const { LoaderOptionsPlugin } = require("webpack")
 
 const postcssPlugins = () => {
@@ -45,6 +46,7 @@ const postcssPlugins = () => {
 
 module.exports = {
   "devtool": "inline-source-map",
+  "target": "web",
   "resolve": {
     "extensions": [
       ".ts",
@@ -233,9 +235,15 @@ module.exports = {
   "plugins": [
     new webpack.IgnorePlugin(/vertx/),
     new ProgressBarPlugin(),
-    new ExtractTextPlugin({
-      "filename": "[name].[contenthash:5].bundle.css",
-      "allChunks": true
+    new webpack.optimize.CommonsChunkPlugin({
+      "name": "main",
+      "async": "common",
+      "children": true,
+      "minChunks": 2
+    }),
+    new CommonsChunkPlugin({
+      "name": "inline",
+      "minChunks": null
     })
   ],
   "node": {

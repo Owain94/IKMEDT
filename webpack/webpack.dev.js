@@ -1,6 +1,8 @@
+const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const PreloadWebpackPlugin = require("preload-webpack-plugin")
 const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin")
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 const entryPoints = [
   "inline",
@@ -16,7 +18,16 @@ module.exports = {
     "main": "./src/main.ts",
     "styles": "./src/assets/css/styles.styl"
   },
+  "output": {
+    "path": path.join(process.cwd(), "dist"),
+    "filename": "[name].bundle.js",
+    "chunkFilename": "[id].chunk.js"
+  },
   "plugins": [
+    new ExtractTextPlugin({
+      "filename": "[name].bundle.css",
+      "allChunks": true
+    }),
     new HtmlWebpackPlugin({
       "template": "./src/index.pug",
       "filename": "./index.html",
